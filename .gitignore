@@ -1,0 +1,45 @@
+# Binaries
+hello-name-test
+
+# OSX Files
+Icon?
+.DS_Store
+._*
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+/DerivedData/
+.vscode/
+
+# debugging/profiling data
+/callgrind.out.*
+/vgcore.*
+gmon.out
+
+# Executables/Object/Temporary files
+*.out
+*.tmp
+*.a
+*.com
+*.dbg
+*.lib
+*.so
+*.o
+*.err
+*.cmi
+*.cmx
+*.wasm
+*.d
+*.deps
+*.gch
+*.obj
+*.err
+*.dylib
+*.exe
+*.kate-swp
+*.dll
+*.core
+*.res
+*.dSYM
+*.tar.xz
+*.tar.gz

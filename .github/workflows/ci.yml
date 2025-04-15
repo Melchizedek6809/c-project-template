@@ -1,0 +1,66 @@
+name: Simple C CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test-nix:
+    name: ${{ matrix.icon }} - ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { icon: '🐧', os: 'ubuntu-latest' }
+          - { icon: '🦢', os: 'ubuntu-22.04-arm' }
+          - { icon: '🍏', os: 'macos-13' }
+          - { icon: '🍎', os: 'macos-latest' }
+    
+    steps:
+      - uses: actions/checkout@v4
+        name: 🔄 Checkout
+
+      - name: 🔨 Build
+        run: make
+      
+      - name: 🔎 Test
+        run: make test 
+
+        
+  build-and-test-win:
+    name: ${{ matrix.icon }} - ${{ matrix.sys }} - ${{ matrix.os }} 
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: msys2 {0}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { icon: '🧸', sys: mingw32, os: 'windows-latest' }
+          - { icon: '🪟', sys: mingw64, os: 'windows-latest' }
+          - { icon: '🌐', sys: ucrt64, os: 'windows-latest' }
+          - { icon: '🐉', sys: clang64, os: 'windows-latest' }
+          - { icon: '💪', sys: clangarm64, os: 'windows-11-arm' }
+    
+    steps:
+      - uses: msys2/setup-msys2@v2
+        name: 🔄 Setup MSys2
+        with:
+          msystem: ${{matrix.sys}}
+          install: git make
+          cache: true
+          pacboy: toolchain:p
+    
+      - uses: actions/checkout@v4
+        name: 🔄 Checkout
+      
+      - name: 🔨 Build
+        run: make
+      
+      - name: 🔎 Test
+        run: make test 
